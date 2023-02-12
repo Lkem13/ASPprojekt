@@ -10,19 +10,19 @@ builder.Services.AddDbContext<ASPDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ASPprojektUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()
+    //.AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ASPDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthorization(options =>
+/*builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();
 });
-
+*/
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

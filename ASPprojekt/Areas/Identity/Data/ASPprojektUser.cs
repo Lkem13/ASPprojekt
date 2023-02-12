@@ -16,7 +16,7 @@ public class ASPprojektUser : IdentityUser
 
     public virtual TypeModel? Type { get; set; }
     public virtual LocationModel? Location { get; set; }
-    public virtual PositionModel? Position { get; set; }
+    public virtual IEnumerable<PositionModel>? Position { get; set; }
     public virtual StatusModel? Status { get; set; }
 }
 
