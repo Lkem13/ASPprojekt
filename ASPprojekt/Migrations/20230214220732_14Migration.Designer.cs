@@ -4,6 +4,7 @@ using ASPprojekt.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPprojekt.Migrations
 {
     [DbContext(typeof(ASPDbContext))]
-    partial class ASPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230214220732_14Migration")]
+    partial class _14Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace ASPprojekt.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StatusID")
+                    b.Property<int>("StatusID")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -129,7 +131,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
 
                     b.HasData(
                         new
@@ -155,7 +157,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("PositionName");
 
-                    b.ToTable("Positions", (string)null);
+                    b.ToTable("Positions");
 
                     b.HasData(
                         new
@@ -206,7 +208,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("StatusID");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("ASPprojektUserLocationModel", b =>
@@ -221,7 +223,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ASPprojektUserLocationModel", (string)null);
+                    b.ToTable("ASPprojektUserLocationModel");
                 });
 
             modelBuilder.Entity("ASPprojektUserPositionModel", b =>
@@ -236,7 +238,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ASPprojektUserPositionModel", (string)null);
+                    b.ToTable("ASPprojektUserPositionModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -380,7 +382,9 @@ namespace ASPprojekt.Migrations
                 {
                     b.HasOne("ASPprojekt.Areas.Identity.Data.StatusModel", "Status")
                         .WithMany("Users")
-                        .HasForeignKey("StatusID");
+                        .HasForeignKey("StatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Status");
                 });

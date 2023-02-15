@@ -1,7 +1,7 @@
 ﻿using ASPprojekt.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPprojekt.Controllers
 {
@@ -33,9 +33,45 @@ namespace ASPprojekt.Controllers
             {
                 ViewBag.data = items;
             }
+
+            var items2 = _contex.Locations.ToList();
+            if (items2 != null)
+            {
+                ViewBag.data2 = items2;
+            }
             return View(_contex.Users.FirstOrDefault(x => x.Id == id));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, ASPprojektUser user, LocationModel location)
+        {
+            
+            try
+            {
+                ASPprojektUser users = _contex.Users.FirstOrDefault(x => x.Id == id);
+                LocationModel locations = _contex.Locations.FirstOrDefault(x => x.LocationId == location.LocationId);
+
+                locations.Town = location.Town;
+                locations.Street = location.Street;
+                locations.ZipCode = location.ZipCode;
+
+                users.FirstName = user.FirstName;
+                users.LastName = user.LastName;
+                users.Email = user.Email;
+                users.Position = user.Position;
+                users.Location = user.Location;
+                users.Pesel = user.Pesel;
+                await _contex.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+                    throw;
+                }
+                return RedirectToAction(nameof(Users));
+ 
+        }
 
         [AllowAnonymous]
         public IActionResult Gosc()

@@ -4,6 +4,7 @@ using ASPprojekt.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPprojekt.Migrations
 {
     [DbContext(typeof(ASPDbContext))]
-    partial class ASPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230214203134_10Migration")]
+    partial class _10Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace ASPprojekt.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StatusID")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -101,8 +103,6 @@ namespace ASPprojekt.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("StatusID");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -129,7 +129,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
 
                     b.HasData(
                         new
@@ -155,7 +155,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("PositionName");
 
-                    b.ToTable("Positions", (string)null);
+                    b.ToTable("Positions");
 
                     b.HasData(
                         new
@@ -192,23 +192,6 @@ namespace ASPprojekt.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.StatusModel", b =>
-                {
-                    b.Property<int>("StatusID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusID"), 1L, 1);
-
-                    b.Property<string>("statusType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StatusID");
-
-                    b.ToTable("Statuses", (string)null);
-                });
-
             modelBuilder.Entity("ASPprojektUserLocationModel", b =>
                 {
                     b.Property<int>("LocationId")
@@ -221,7 +204,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ASPprojektUserLocationModel", (string)null);
+                    b.ToTable("ASPprojektUserLocationModel");
                 });
 
             modelBuilder.Entity("ASPprojektUserPositionModel", b =>
@@ -236,7 +219,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ASPprojektUserPositionModel", (string)null);
+                    b.ToTable("ASPprojektUserPositionModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -376,15 +359,6 @@ namespace ASPprojekt.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.ASPprojektUser", b =>
-                {
-                    b.HasOne("ASPprojekt.Areas.Identity.Data.StatusModel", "Status")
-                        .WithMany("Users")
-                        .HasForeignKey("StatusID");
-
-                    b.Navigation("Status");
-                });
-
             modelBuilder.Entity("ASPprojektUserLocationModel", b =>
                 {
                     b.HasOne("ASPprojekt.Areas.Identity.Data.LocationModel", null)
@@ -464,11 +438,6 @@ namespace ASPprojekt.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.StatusModel", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

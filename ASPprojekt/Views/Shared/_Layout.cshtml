@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using ASPprojekt.Areas.Identity.Data
+
+@inject SignInManager<ASPprojektUser> SignInManager
+@inject UserManager<ASPprojektUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,9 +23,17 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!--<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Gosc">Calendar</a>
+                        </li>
+                       <!-- <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
@@ -31,8 +45,10 @@
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Gosc">Gosc</a>
                         </li>
+                        -->
                     </ul>
-                </div> -->
+                </div> 
+                }
                 <partial name = "_LoginPartial" />
             </div>
         </nav>
