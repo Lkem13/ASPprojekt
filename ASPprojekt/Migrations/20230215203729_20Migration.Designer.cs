@@ -4,6 +4,7 @@ using ASPprojekt.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPprojekt.Migrations
 {
     [DbContext(typeof(ASPDbContext))]
-    partial class ASPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230215203729_20Migration")]
+    partial class _20Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,17 +81,20 @@ namespace ASPprojekt.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PositionModel")
-                        .HasColumnType("int");
+                    b.Property<string>("PositionModel")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Status")
+                    b.Property<int?>("StatusModel")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -109,47 +114,9 @@ namespace ASPprojekt.Migrations
 
                     b.HasIndex("PositionModel");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.HasIndex("StatusModel");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a720b0bf-5488-41db-be10-3614383357fd",
-                            Email = "admin@admin.admin",
-                            EmailConfirmed = true,
-                            FirstName = "Admin",
-                            LastName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@ADMIN.ADMIN",
-                            NormalizedUserName = "ADMIN@ADMIN.ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFNkXUJTrgp50fHNf8QK5zoQUxiEVYzlFsxpLvyY0gXtu2NjykZihd6WRFH9ox57Yg==",
-                            Pesel = "00000000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7b7eeffb-653c-44b5-b0f1-4874397ec5a6",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.admin"
-                        },
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb8",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "efcfac36-037d-4269-a241-23d12a7d3202",
-                            Email = "user@user.user",
-                            EmailConfirmed = true,
-                            FirstName = "User",
-                            LastName = "User",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER@USER.USER",
-                            NormalizedUserName = "USER@USER.USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDWTUYhKIYGdsmZWyBUdQBF54Fyk5Y5rIaq7qaerskN468AiOnKBymM0xcS6Ml/X3A==",
-                            Pesel = "11111111111",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a4d44482-bc24-4be5-97dd-801cfd230818",
-                            TwoFactorEnabled = false,
-                            UserName = "user@user.user"
-                        });
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.LocationModel", b =>
@@ -171,63 +138,68 @@ namespace ASPprojekt.Migrations
                     b.HasKey("LocationId");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            LocationId = 1,
+                            Street = "Brak",
+                            Town = "Brak"
+                        },
+                        new
+                        {
+                            LocationId = 2,
+                            Street = "Wielicka 13/5A",
+                            Town = "Cracow"
+                        },
+                        new
+                        {
+                            LocationId = 3,
+                            Street = "Zielona 11",
+                            Town = "Warsaw"
+                        });
                 });
 
             modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.PositionModel", b =>
                 {
-                    b.Property<int>("PositionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PositionId"), 1L, 1);
-
                     b.Property<string>("PositionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PositionId");
+                    b.HasKey("PositionName");
 
                     b.ToTable("Positions");
 
                     b.HasData(
                         new
                         {
-                            PositionId = 1,
                             PositionName = "Brak"
                         },
                         new
                         {
-                            PositionId = 2,
                             PositionName = "Front Desk"
                         },
                         new
                         {
-                            PositionId = 3,
                             PositionName = "Chef"
                         },
                         new
                         {
-                            PositionId = 4,
                             PositionName = "Cook"
                         },
                         new
                         {
-                            PositionId = 5,
                             PositionName = "Hotel Manager"
                         },
                         new
                         {
-                            PositionId = 6,
                             PositionName = "Maid"
                         },
                         new
                         {
-                            PositionId = 7,
                             PositionName = "Barista"
                         },
                         new
                         {
-                            PositionId = 8,
                             PositionName = "Waiter"
                         });
                 });
@@ -246,7 +218,7 @@ namespace ASPprojekt.Migrations
 
                     b.HasKey("StatusID");
 
-                    b.ToTable("StatusModel");
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -274,22 +246,6 @@ namespace ASPprojekt.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "0bb0b26d-61d2-4d20-b705-7722eb36748b",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7211",
-                            ConcurrencyStamp = "5c7023de-b4fd-40af-9cf6-fc157a5df0ea",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -379,18 +335,6 @@ namespace ASPprojekt.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
-                        },
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb8",
-                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -424,9 +368,15 @@ namespace ASPprojekt.Migrations
                         .WithMany()
                         .HasForeignKey("PositionModel");
 
+                    b.HasOne("ASPprojekt.Areas.Identity.Data.StatusModel", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusModel");
+
                     b.Navigation("Location");
 
                     b.Navigation("Position");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

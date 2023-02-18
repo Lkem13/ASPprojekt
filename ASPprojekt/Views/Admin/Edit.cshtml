@@ -1,5 +1,9 @@
 ﻿@using ASPprojekt.Areas.Identity.Data
+@using System;
+@using Microsoft.AspNetCore.Identity
 @model ASPprojekt.Areas.Identity.Data.ASPprojektUser
+@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _contex
+@inject UserManager<ASPprojektUser> UserManager
 
 
 @{
@@ -36,26 +40,34 @@
                 <span asp-validation-for="Pesel" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label><br>
-                @Html.DropDownList("Location", new SelectList(ViewBag.data2, "LocationId", "Town"))
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="Location.Town" class="control-label"></label><br>
+                <input asp-for="Location.Town" class="form-control" />
+                <span asp-validation-for="Location.Town" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Position" class="control-label"></label><br>
-                @Html.DropDownList("PositionName", new SelectList(ViewBag.data, "PositionName", "PositionName"))
-                <span asp-validation-for="Position" class="text-danger"></span>
+                <label asp-for="Location.Street" class="control-label"></label><br>
+                <input asp-for="Location.Street" class="form-control" />
+                <span asp-validation-for="Location.Street" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Position.PositionId" class="control-label"></label><br>
+                <select asp-for="Position.PositionName" class="form-control">
+                    @{
+                        var positions = _contex.Positions.ToList();
+                        foreach (var item in positions)
+                        {
+                            <option value="@item.PositionName">@item.PositionName</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Position.PositionName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusType>()">
                 </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<TypeModel>()">
-                </select>
-                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
 
             <div class="form-group">

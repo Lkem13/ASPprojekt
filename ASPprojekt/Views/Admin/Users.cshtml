@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<ASPprojekt.Areas.Identity.Data.ASPprojektUser>
 @using ASPprojekt.Areas.Identity.Data
+@using System;
+@using Microsoft.AspNetCore.Identity
+@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _userManager
+@inject UserManager<ASPprojektUser> UserManager
 @{
     ViewData["Title"] = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,16 +27,19 @@
             @Html.DisplayNameFor(model => model.Pesel)
        </th>
        <th>
-            @Html.DisplayNameFor(model => model.Location)
+            @Html.DisplayNameFor(model => model.Location.Town)
        </th>
        <th>
-            @Html.DisplayNameFor(model => model.Position)
+            @Html.DisplayNameFor(model => model.Location.Street)
+       </th>
+       <th>
+            @Html.DisplayNameFor(model => model.Position.PositionName)
        </th>
        <th>
             @Html.DisplayNameFor(model => model.Status)
        </th>
        <th>
-            @Html.DisplayNameFor(model => model.Type)
+            Role
        </th>
         <th></th>
     </tr>
@@ -52,23 +59,26 @@
                     @Html.DisplayFor(modelItem => item.Pesel)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location)
+                    @Html.DisplayFor(modelItem => item.Location.Town)
                 </td>
                 <td>
-                   @Html.DisplayFor(modelItem => item.Position) 
+                    @Html.DisplayFor(modelItem => item.Location.Street)
+                </td>
+                <td>
+                   @Html.DisplayFor(modelItem => item.Position.PositionName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                        @{
+                            var roles = UserManager.GetRolesAsync(item).Result;
+                            foreach (var role in roles)
+                            {
+                                <text>@role</text>
+                            }
+                        }
                 </td>
-                <!-- <td>
-                     foreach (var userRole in item.UserRoles)
-                    {
-                        <p>Html.DisplayFor(model=>userRole.Role.Name)&nbsp;</p>
-                    } 
-                </td> -->
                 <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new {  id=item.Id })

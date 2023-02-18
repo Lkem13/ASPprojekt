@@ -15,7 +15,5 @@ namespace ASPprojekt.Areas.Identity.Data
         public int StatusID { get; set; }
         [Required]
         public StatusType statusType { get; set; }
-
-        public List<ASPprojektUser> Users { get; set; }
     }
 }

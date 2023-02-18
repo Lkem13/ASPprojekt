@@ -10,7 +10,7 @@ builder.Services.AddDbContext<ASPDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ASPprojektUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    //.AddRoles<IdentityRole>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ASPDbContext>();
 
 // Add services to the container.

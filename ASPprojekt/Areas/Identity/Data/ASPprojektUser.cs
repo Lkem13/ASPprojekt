@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -14,10 +15,13 @@ public class ASPprojektUser : IdentityUser
     public string LastName { get; set; }
     public string Pesel { get; set; }
 
-    public virtual TypeModel? Type { get; set; }
-    public IEnumerable<LocationModel> Location { get; set; }
-    public virtual IEnumerable<PositionModel>? Position { get; set; }
-    public virtual StatusModel? Status { get; set; }
+
+    [ForeignKey("LocationModel")]
+    public  LocationModel? Location { get; set; }
+    [ForeignKey("PositionModel")]
+    public PositionModel? Position { get; set; }
+    [ForeignKey("StatusModel")]
+    public  StatusType? Status { get; set; }
 }
 
 

@@ -8,12 +8,10 @@ namespace ASPprojekt.Areas.Identity.Data
         [Key]
         public int LocationId { get; set; }
         [NotNull]
-        public string Town { get; set; }
+        public string Town { get; set; } = "Brak";
         [NotNull]
-        public string Street { get; set; }
-        [NotNull]
-        public string ZipCode { get; set; }
+        public string Street { get; set; } = "Brak";
 
-        public List<ASPprojektUser> Users { get; set; }
+
     }
 }
