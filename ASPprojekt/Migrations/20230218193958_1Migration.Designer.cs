@@ -4,6 +4,7 @@ using ASPprojekt.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPprojekt.Migrations
 {
     [DbContext(typeof(ASPDbContext))]
-    partial class ASPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230218193958_1Migration")]
+    partial class _1Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,11 @@ namespace ASPprojekt.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LocationModel")
@@ -68,6 +72,7 @@ namespace ASPprojekt.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pesel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -113,7 +118,7 @@ namespace ASPprojekt.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f50641a-5b1a-4ae6-b7a9-e3ab9760c579",
+                            ConcurrencyStamp = "d4840515-83f2-4de4-96eb-f125d2e71585",
                             Email = "admin@admin.admin",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -121,10 +126,10 @@ namespace ASPprojekt.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.ADMIN",
                             NormalizedUserName = "ADMIN@ADMIN.ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECTCUGYw8eUGBoFl402NyaBL4QWol0wFV9MEBf9rSmAJ49pHWeSphxECQBhshUqdNQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEONNtaUm+U5GaQjAUgRrT8pC0feq2KFdS6286yEuJ1mzZC28qCasZj+Z09VH4BCk3Q==",
                             Pesel = "00000000000",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ec59922c-d6e1-4130-b1c7-a8a8ff220830",
+                            SecurityStamp = "552c80fd-85c8-4032-81fd-be4d2b926d6f",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.admin"
                         },
@@ -132,7 +137,7 @@ namespace ASPprojekt.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5bb65ea9-cea9-4951-b794-8967d5bda371",
+                            ConcurrencyStamp = "cbd057ae-be37-4f74-be18-a4e537df6c72",
                             Email = "user@user.user",
                             EmailConfirmed = true,
                             FirstName = "User",
@@ -140,10 +145,10 @@ namespace ASPprojekt.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.USER",
                             NormalizedUserName = "USER@USER.USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPal5xWoTge0/boHIcXpSetTjolxg9cnPyAlsEap4IJWhNUOHT8MfTanyAEw9eJPVg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKC/bgZCMt74iEqjRZnZ6nCi9SiObbJ9VGUUBjQOEuaUcpa1uwZr2LdOB+uuODG1BQ==",
                             Pesel = "11111111111",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "426214ca-8056-4565-a5a0-40ebac0a59f9",
+                            SecurityStamp = "8a772696-8acc-4b10-ab10-1ac080df4a2f",
                             TwoFactorEnabled = false,
                             UserName = "user@user.user"
                         });
@@ -179,7 +184,6 @@ namespace ASPprojekt.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ASPprojektUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ShiftDay")
@@ -304,14 +308,14 @@ namespace ASPprojekt.Migrations
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "48558a02-18a9-48d5-b9d1-9f98c2b6f576",
+                            ConcurrencyStamp = "59d05732-dfe1-4bc1-8098-d92586cc6319",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7211",
-                            ConcurrencyStamp = "a0789143-1f0a-45f6-a9e7-5d4f2ec82f86",
+                            ConcurrencyStamp = "45f71dab-5b34-4065-8ea2-b63fedfe7a63",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -446,7 +450,7 @@ namespace ASPprojekt.Migrations
                         .HasForeignKey("LocationModel");
 
                     b.HasOne("ASPprojekt.Areas.Identity.Data.PositionModel", "Position")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("PositionModel");
 
                     b.Navigation("Location");
@@ -458,9 +462,7 @@ namespace ASPprojekt.Migrations
                 {
                     b.HasOne("ASPprojekt.Areas.Identity.Data.ASPprojektUser", "ASPprojektUser")
                         .WithMany()
-                        .HasForeignKey("ASPprojektUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ASPprojektUserId");
 
                     b.Navigation("ASPprojektUser");
                 });
@@ -514,11 +516,6 @@ namespace ASPprojekt.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ASPprojekt.Areas.Identity.Data.PositionModel", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

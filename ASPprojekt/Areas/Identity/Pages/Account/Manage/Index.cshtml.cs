@@ -37,7 +37,6 @@ namespace ASPprojekt.Areas.Identity.Pages.Account.Manage
         public string LastName { get; set; }
 
         public StatusType? Status { get; set; }
-        public PositionModel? Position { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -77,7 +76,6 @@ namespace ASPprojekt.Areas.Identity.Pages.Account.Manage
             FirstName = user.FirstName;
             LastName = user.LastName;
             Status = user.Status;
-            Position = user.Position;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

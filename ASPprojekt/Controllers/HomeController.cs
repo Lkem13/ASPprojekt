@@ -1,20 +1,26 @@
-﻿using ASPprojekt.Models;
+﻿using ASPprojekt.Areas.Identity.Data;
+using ASPprojekt.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ASPprojekt.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ASPDbContext _context;
+        private readonly UserManager<ASPprojektUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ASPDbContext context, UserManager<ASPprojektUser> userManager)
         {
-            _logger = logger;
+            _context = context;
+            _userManager = userManager;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -23,6 +29,12 @@ namespace ASPprojekt.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+        public IActionResult Plan()
+        {
+            return View(_context.PlanModels
+                .Include(u => u.ASPprojektUser)
+                .ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

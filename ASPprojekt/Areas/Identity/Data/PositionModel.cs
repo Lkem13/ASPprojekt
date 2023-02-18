@@ -12,5 +12,6 @@ namespace ASPprojekt.Areas.Identity.Data
         [Required]
         public string PositionName { get; set; }
 
+        public ICollection<ASPprojektUser> Users { get; set; }
     }
 }

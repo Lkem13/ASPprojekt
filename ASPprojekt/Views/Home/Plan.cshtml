@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ASPprojekt.Areas.Identity.Data.PlanModel>
+@using ASPprojekt.Areas.Identity.Data
+@using System;
+@using Microsoft.AspNetCore.Identity
+
+@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _userManager
+@inject UserManager<ASPprojektUser> UserManager
+@{
+    ViewData["Title"] = "Plan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Plan</h1>
+
+        <table class = "table">
+    <tr>
+       <th>
+             @Html.DisplayNameFor(model => model.ASPprojektUser) 
+       </th>
+       <th>
+            @Html.DisplayNameFor(model => model.ShiftStart)
+       </th>
+       <th>
+            @Html.DisplayNameFor(model => model.ShiftEnd)
+       </th>
+       <th>
+            @Html.DisplayNameFor(model => model.ShiftDay)
+       </th>
+    </tr>
+@foreach (var item in Model)
+    {
+         <tr>
+                <td>
+                     @Html.DisplayFor(modelItem => item.ASPprojektUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShiftStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShiftEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShiftDay)
+                </td>
+
+            </tr>
+    }
+            </table>

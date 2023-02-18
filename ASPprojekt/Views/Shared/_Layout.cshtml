@@ -23,32 +23,45 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Gosc">Calendar</a>
-                        </li>
-                       <!-- <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Gosc">Gosc</a>
-                        </li>
-                        -->
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1"> 
+                 @{
+                            ASPprojektUser user = await UserManager.GetUserAsync(User);
+                            string role;
+                            if (user is null)
+                                role = "Guest";
+                            else
+                                role = UserManager.GetRolesAsync(user).Result.FirstOrDefault();
+                            switch (role)
+                                {
+                                    case "Admin":
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Plan">Plan</a>
+                                            </li>
+                                        }
+                                        break;
+
+                                    case "User":
+                                        {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Plan">Plan</a>
+                                        </li>
+                                        }
+                                        break;
+                                    default:
+                                        {
+                                            
+                                        }
+                                        break;
+                                }
+
+                    }
                     </ul>
                 </div> 
-                }
                 <partial name = "_LoginPartial" />
             </div>
         </nav>

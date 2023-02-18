@@ -2,7 +2,7 @@
 @using System;
 @using Microsoft.AspNetCore.Identity
 @model ASPprojekt.Areas.Identity.Data.ASPprojektUser
-@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _contex
+@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _context
 @inject UserManager<ASPprojektUser> UserManager
 
 
@@ -52,12 +52,12 @@
 
             <div class="form-group">
                 <label asp-for="Position.PositionId" class="control-label"></label><br>
-                <select asp-for="Position.PositionName" class="form-control">
+                <select asp-for="Position.PositionId" class="form-control">
                     @{
-                        var positions = _contex.Positions.ToList();
+                        var positions = _context.Positions.ToList();
                         foreach (var item in positions)
                         {
-                            <option value="@item.PositionName">@item.PositionName</option>
+                            <option value="@item.PositionId">@item.PositionName</option>
                         }
                     }
                 </select>

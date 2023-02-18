@@ -1,0 +1,51 @@
+﻿@model ASPprojekt.Areas.Identity.Data.PlanModel
+
+@inject ASPprojekt.Areas.Identity.Data.ASPDbContext _context
+
+@{
+    ViewData["Title"] = "CreatePlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditPlan</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePlan">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                            <div class="d-inline-flex"><br>
+                            <select asp-for="ASPprojektUser.Id" class="form-control">
+                                @{
+                                    var usernames = _context.Users.ToList();
+                                    foreach (var item in usernames){
+                                    <option value="@item.Id">@item.Email</option>
+                                    }
+                            }
+                            </select>
+                            <span asp-validation-for="ASPprojektUser" class="text-danger"></span>
+                            
+                            <div class="form-group">
+                                <input asp-for="ShiftStart" class="form-control" />
+                                <span asp-validation-for="ShiftStart" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="ShiftEnd" class="form-control" />
+                                <span asp-validation-for="ShiftEnd" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="ShiftDay" class="form-control" />
+                                <span asp-validation-for="ShiftDay" class="text-danger"></span>
+                            </div>
+                        </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>       
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Plan">Back to List</a>
+</div>

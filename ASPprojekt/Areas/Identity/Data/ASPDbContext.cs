@@ -11,7 +11,7 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
     public DbSet<ASPprojektUser> Users { get; set; }
     public DbSet<LocationModel> Locations { get; set; }
     public DbSet<PositionModel> Positions { get; set; }
-
+    public DbSet<PlanModel> PlanModels { get; set; }
 
     public ASPDbContext(DbContextOptions<ASPDbContext> options)
         : base(options)
@@ -27,6 +27,9 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
         builder.Entity<StatusModel>()
             .Property(s => s.statusType)
             .HasConversion<string>();
+
+            builder.Entity<PlanModel>()
+                .HasKey(c => c.Id);
 
         builder.Entity<PositionModel>().HasData(
             new PositionModel {
