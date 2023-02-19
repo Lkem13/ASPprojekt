@@ -1,15 +1,16 @@
-﻿@model IEnumerable<ASPprojekt.Areas.Identity.Data.ASPprojektUser>
+﻿@model ASPprojekt.Areas.Identity.Data.ASPprojektUser
 @using ASPprojekt.Areas.Identity.Data
 @using System;
 @using Microsoft.AspNetCore.Identity
 @inject ASPprojekt.Areas.Identity.Data.ASPDbContext _userManager
 @inject UserManager<ASPprojektUser> UserManager
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Users</h1>
+<h1>Delete</h1>
+<h3>Are you sure you want to delete this?</h3>
 
         <table class = "table">
     <tr>
@@ -37,51 +38,36 @@
        <th>
             @Html.DisplayNameFor(model => model.Status)
        </th>
-       <th>
-            Role
-       </th>
-        <th></th>
     </tr>
-@foreach (var item in Model)
-    {
          <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @Html.DisplayFor(model => model.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(model => model.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(model => model.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pesel)
+                    @Html.DisplayFor(model => model.Pesel)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location.Town)
+                    @Html.DisplayFor(model => model.Location.Town)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Location.Street)
+                    @Html.DisplayFor(model => model.Location.Street)
                 </td>
                 <td>
-                   @Html.DisplayFor(modelItem => item.Position.PositionName)
+                   @Html.DisplayFor(model => model.Position.PositionName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                        @{
-                            var roles = UserManager.GetRolesAsync(item).Result;
-                            foreach (var role in roles)
-                            {
-                                <text>@role</text>
-                            }
-                        }
-                </td>
-                <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                    @Html.DisplayFor(model => model.Status)
                 </td>
             </tr>
-    }
             </table>
+                <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Plan">Back to List</a>
+    </form>

@@ -73,6 +73,21 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
             }
             );
 
+        builder.Entity<LocationModel>().HasData(
+            new LocationModel
+            {
+                LocationId = 1,
+                Town = "Krakow",
+                Street = "Karmelicka"
+            },
+            new LocationModel
+            {
+                LocationId = 2,
+                Town = "Warszawa",
+                Street = "Brzozowa"
+            }
+            );
+
         //Seed Roles
         builder.Entity<IdentityRole>().HasData(
            new IdentityRole
@@ -92,7 +107,7 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
         //Seed Admin and User
         var hasher = new PasswordHasher<ASPprojektUser>();
         builder.Entity<ASPprojektUser>().HasData(
-            new ASPprojektUser
+            new
             {
                 Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 UserName = "admin@admin.admin",
@@ -103,9 +118,11 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
                 EmailConfirmed = true,
                 FirstName = "Admin",
                 LastName = "Admin",
-                Pesel = "00000000000"
+                Pesel = "00000000000",
+                Location = 1,
+                Positions = 1
             },
-            new ASPprojektUser
+            new
             {
                 Id = "8e445865-a24d-4543-a6c6-9443d048cdb8",
                 UserName = "user@user.user",
@@ -116,7 +133,39 @@ public class ASPDbContext : IdentityDbContext<ASPprojektUser>
                 EmailConfirmed = true,
                 FirstName = "User",
                 LastName = "User",
-                Pesel = "11111111111"
+                Pesel = "11111111111",
+                Location = 1,
+                Positions = 2
+            },
+            new
+            {
+                Id = "8e445865-a24d-4543-a6c6-9443d048cdb7",
+                UserName = "user2@user.user",
+                NormalizedUserName = "USER2@USER.USER",
+                PasswordHash = hasher.HashPassword(null, "user"),
+                Email = "user2@user.user",
+                NormalizedEmail = "USER2@USER.USER",
+                EmailConfirmed = true,
+                FirstName = "User2",
+                LastName = "User2",
+                Pesel = "11111111112",
+                Location = 1,
+                Positions = 3
+            },
+            new
+            {
+                Id = "8e445865-a24d-4543-a6c6-9443d048cdb6",
+                UserName = "user3@user.user",
+                NormalizedUserName = "USER3@USER.USER",
+                PasswordHash = hasher.HashPassword(null, "user"),
+                Email = "user23user.user",
+                NormalizedEmail = "USER3@USER.USER",
+                EmailConfirmed = true,
+                FirstName = "User3",
+                LastName = "User3",
+                Pesel = "11111111113",
+                Location = 2,
+                Positions = 5
             }
          );
         //Add roles for Admin and User

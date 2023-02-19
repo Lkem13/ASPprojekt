@@ -54,7 +54,6 @@ namespace ASPprojekt.Controllers
         public async Task<IActionResult> Edit(string id, ASPprojektUser user)
         {
             ASPprojektUser users  = _context.Users.Include(l => l.Position).Include(p => p.Location).FirstOrDefault(x => x.Id == id);
-           // user.Location = _contex.Locations.ToList().FirstOrDefault(x => x.LocationId == user.Location.LocationId);
             try
             {
                  users.FirstName = user.FirstName.ToUpper();
@@ -82,6 +81,28 @@ namespace ASPprojekt.Controllers
             }
         }
 
+        public ActionResult Delete(string id)
+        {
+            return View(_context.Users
+                .Include(p => p.Location)
+                .Include(l => l.Position)
+                .ToList().FirstOrDefault(x => x.Id == id));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Users));
+
+        }
+
         public IActionResult Plan()
         {
             return View(_context.PlanModels
@@ -98,9 +119,9 @@ namespace ASPprojekt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePlan(PlanModel plan)
         {
-            var user = await _userManager.GetUserAsync(User);
 
-            plan.ASPprojektUser = user;
+             plan.ASPprojektUser = _context.Users.ToList().FirstOrDefault(x => x.Id == plan.ASPprojektUser.Id);
+           
 
             _context.Add(plan);
             await _context.SaveChangesAsync();
@@ -132,21 +153,37 @@ namespace ASPprojekt.Controllers
                 .FirstOrDefault(x => x.Id == id);
             try
             {
-                var user = await _userManager.GetUserAsync(User);
-
-                plans.ASPprojektUser = user;
+                plan.ASPprojektUser = _context.Users.ToList().FirstOrDefault(x => x.Id == plan.ASPprojektUser.Id);
                 plans.ShiftStart = plan.ShiftStart;
                 plans.ShiftEnd = plan.ShiftEnd;
                 plans.ShiftDay = plan.ShiftDay;
 
                 _context.Update(plans);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Users));
+                return RedirectToAction(nameof(Plan));
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult DeletePlan(int id)
+        {
+            return View(_context.PlanModels
+                .Include(u => u.ASPprojektUser)
+                .ToList().FirstOrDefault(x => x.Id == id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePlan(int id, PlanModel plan)
+        {
+                plan.ASPprojektUser = _context.Users.ToList().FirstOrDefault(x => x.Id == plan.ASPprojektUser.Id);
+                _context.Remove(plan);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Plan));
+            
         }
     }
 }
